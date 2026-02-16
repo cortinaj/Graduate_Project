@@ -144,7 +144,6 @@
     <FileSet Name="UART_IP_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/UART_IP_0" RelGenDir="$PGENDIR/UART_IP_0">
       <File Path="$PSRCDIR/sources_1/ip/UART_IP_0/UART_IP_0.xci">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -158,7 +157,6 @@
     <FileSet Name="xadc_wiz_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/xadc_wiz_0" RelGenDir="$PGENDIR/xadc_wiz_0">
       <File Path="$PSRCDIR/sources_1/ip/xadc_wiz_0/xadc_wiz_0.xci">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
