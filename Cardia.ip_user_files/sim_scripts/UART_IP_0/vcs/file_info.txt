@@ -1,0 +1,7 @@
+baud_16tick_gen.v,verilog,xil_defaultlib,../../../../Cardia.gen/sources_1/ip/UART_IP_0/src/baud_16tick_gen.v,
+baud_tick_gen.v,verilog,xil_defaultlib,../../../../Cardia.gen/sources_1/ip/UART_IP_0/src/baud_tick_gen.v,
+uart_rx.v,verilog,xil_defaultlib,../../../../Cardia.gen/sources_1/ip/UART_IP_0/src/uart_rx.v,
+uart_tx.v,verilog,xil_defaultlib,../../../../Cardia.gen/sources_1/ip/UART_IP_0/src/uart_tx.v,
+UART_IP.v,verilog,xil_defaultlib,../../../../Cardia.gen/sources_1/ip/UART_IP_0/src/UART_IP.v,
+UART_IP_0.v,verilog,xil_defaultlib,../../../../Cardia.gen/sources_1/ip/UART_IP_0/sim/UART_IP_0.v,
+glbl.v,Verilog,xil_defaultlib,glbl.v
