@@ -77,10 +77,121 @@ module xadc_uart_stream(
     
     assign daddr = 7'h1E;
     
-    always_ff@(posedge clk) begin
-        if(_drdy == 2'b10) begin // on negative edge
+    wire drdy_fall = (_drdy == 2'b10);
+
+    // latch data when DRDY falls
+    always_ff @(posedge clk) begin
+        if (drdy_fall) begin
             data <= dout[15:8];
-            end
+        end
     end
+    
+    // LED debug
+    // led0 toggles on every captured sample
+    always_ff @(posedge clk) begin
+        if (drdy_fall) led[0] <= ~led[0];
+    end
+    assign led[1] = |data;     // on if data != 0
+    assign led[2] = data[7];
+    assign led[3] = data[6];
+    
+    // ============================================================
+    // UART streaming: send "HH\r\n" at a safe rate
+    // ============================================================
+
+    // hex nibble -> ASCII
+    function automatic logic [7:0] hexchar(input logic [3:0] nib);
+        begin
+            if (nib < 4'd10) hexchar = 8'h30 + nib;          // '0'
+            else             hexchar = 8'h41 + (nib - 4'd10);// 'A'
+        end
+    endfunction
+
+    // Fixed wait (no busy pin): 10 bits per byte
+    localparam int CLK_FREQ      = 125_000_000;
+    localparam int BAUD          = 115_200;
+    localparam int CLKS_PER_BIT  = CLK_FREQ / BAUD;
+    localparam int CLKS_PER_BYTE = CLKS_PER_BIT * 10;
+
+    // Downsample so we don't try to print every XADC conversion
+    localparam int PRINT_DIV = 5000;   // adjust: smaller=faster prints, bigger=slower
+    int sample_div = 0;
+
+    logic       kick_print = 1'b0;
+    logic [7:0] latched    = 8'h00;
+
+    always_ff @(posedge clk) begin
+        kick_print <= 1'b0;
+        if (drdy_fall) begin
+            if (sample_div == PRINT_DIV-1) begin
+                sample_div  <= 0;
+                latched     <= data;      // print latest captured byte
+                kick_print  <= 1'b1;
+            end else begin
+                sample_div <= sample_div + 1;
+            end
+        end
+    end
+
+    typedef enum logic [2:0] {S_IDLE, S_HI, S_LO, S_CR, S_LF, S_WAIT} state_t;
+    state_t state = S_IDLE;
+
+    logic [31:0] wait_cnt = 0;
+    state_t      next_state = S_IDLE;
+
+    always_ff @(posedge clk) begin
+        tx_start <= 1'b0; // default (pulse)
+
+        case (state)
+            S_IDLE: begin
+                if (kick_print) begin
+                    state <= S_HI;
+                end
+            end
+
+            S_HI: begin
+                tx_data    <= hexchar(latched[7:4]);
+                tx_start   <= 1'b1;
+                wait_cnt   <= 0;
+                next_state <= S_LO;
+                state      <= S_WAIT;
+            end
+
+            S_LO: begin
+                tx_data    <= hexchar(latched[3:0]);
+                tx_start   <= 1'b1;
+                wait_cnt   <= 0;
+                next_state <= S_CR;
+                state      <= S_WAIT;
+            end
+
+            S_CR: begin
+                tx_data    <= 8'h0D;
+                tx_start   <= 1'b1;
+                wait_cnt   <= 0;
+                next_state <= S_LF;
+                state      <= S_WAIT;
+            end
+
+            S_LF: begin
+                tx_data    <= 8'h0A;
+                tx_start   <= 1'b1;
+                wait_cnt   <= 0;
+                next_state <= S_IDLE;
+                state      <= S_WAIT;
+            end
+
+            S_WAIT: begin
+                if (wait_cnt >= CLKS_PER_BYTE-1) begin
+                    state <= next_state;
+                end else begin
+                    wait_cnt <= wait_cnt + 1;
+                end
+            end
+
+            default: state <= S_IDLE;
+        endcase
+    end
+
     
 endmodule
