@@ -67,7 +67,7 @@ module xadc_uart_stream(
         .TxD_par (rx_data),
         .TxD_ready (rx_ready),
         .RxD_par (tx_data),
-        .Rxd_start (tx_start)
+        .RxD_start (tx_start)
         );
                       
   //Logic      

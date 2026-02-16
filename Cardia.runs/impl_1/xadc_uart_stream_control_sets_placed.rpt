@@ -1,0 +1,87 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
+| Date         : Sun Feb 15 23:29:42 2026
+| Host         : DESKTOP-6LGOCJL running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file xadc_uart_stream_control_sets_placed.rpt
+| Design       : xadc_uart_stream
+| Device       : xc7z010
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |     9 |
+|    Minimum number of control sets                        |     9 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    31 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |     9 |
+| >= 0 to < 4        |     0 |
+| >= 4 to < 6        |     0 |
+| >= 6 to < 8        |     1 |
+| >= 8 to < 10       |     3 |
+| >= 10 to < 12      |     1 |
+| >= 12 to < 14      |     2 |
+| >= 14 to < 16      |     1 |
+| >= 16              |     1 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |               9 |            5 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |              11 |            3 |
+| Yes          | No                    | No                     |              48 |           13 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |              45 |           13 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++----------------+--------------------------------------------------+-------------------------------------+------------------+----------------+--------------+
+|  Clock Signal  |                   Enable Signal                  |           Set/Reset Signal          | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+--------------------------------------------------+-------------------------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG | myuart/inst/Uart_tx/RxD_buff[7]_i_1_n_0          |                                     |                2 |              7 |         3.50 |
+|  clk_IBUF_BUFG | latched                                          |                                     |                1 |              8 |         8.00 |
+|  clk_IBUF_BUFG |                                                  |                                     |                5 |              9 |         1.80 |
+|  clk_IBUF_BUFG | next_state                                       |                                     |                3 |              9 |         3.00 |
+|  clk_IBUF_BUFG |                                                  | myuart/inst/baudgen/cnt[10]_i_1_n_0 |                3 |             11 |         3.67 |
+|  clk_IBUF_BUFG | myuart/inst/Uart_tx/FSM_onehot_state[11]_i_1_n_0 |                                     |                2 |             12 |         6.00 |
+|  clk_IBUF_BUFG | drdy_fall                                        |                                     |                5 |             12 |         2.40 |
+|  clk_IBUF_BUFG | wait_cnt[13]_i_2_n_0                             | wait_cnt[13]_i_1_n_0                |                5 |             14 |         2.80 |
+|  clk_IBUF_BUFG | drdy_fall                                        | latched                             |                8 |             31 |         3.88 |
++----------------+--------------------------------------------------+-------------------------------------+------------------+----------------+--------------+
+
+
