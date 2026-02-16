@@ -123,6 +123,7 @@ set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
   set_param chipscope.maxJobs 8
+  set_param xicom.use_bs_reader 1
   set_param runs.launchOptions { -jobs 16  }
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7z010clg400-1
@@ -141,8 +142,8 @@ OPTRACE "set parameters" START { }
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
   add_files -quiet C:/Users/JP/Documents/School/Grad_Project_v2/Graduate_Project/Cardia.runs/synth_1/xadc_uart_stream.dcp
-  read_ip -quiet c:/Users/JP/Documents/School/Grad_Project_v2/Graduate_Project/Cardia.srcs/sources_1/ip/UART_IP_0/UART_IP_0.xci
-  read_ip -quiet c:/Users/JP/Documents/School/Grad_Project_v2/Graduate_Project/Cardia.srcs/sources_1/ip/xadc_wiz_0/xadc_wiz_0.xci
+  read_ip -quiet C:/Users/JP/Documents/School/Grad_Project_v2/Graduate_Project/Cardia.srcs/sources_1/ip/UART_IP_0/UART_IP_0.xci
+  read_ip -quiet C:/Users/JP/Documents/School/Grad_Project_v2/Graduate_Project/Cardia.srcs/sources_1/ip/xadc_wiz_0/xadc_wiz_0.xci
 OPTRACE "read constraints: implementation" START { }
   read_xdc C:/Users/JP/Downloads/Zybo-Z7-Master.xdc
 OPTRACE "read constraints: implementation" END { }

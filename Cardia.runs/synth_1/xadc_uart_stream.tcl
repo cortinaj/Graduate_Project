@@ -71,6 +71,7 @@ proc create_report { reportName command } {
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param chipscope.maxJobs 8
+set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7z010clg400-1
 
@@ -91,9 +92,9 @@ set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib -sv C:/Users/JP/Documents/School/Grad_Project_v2/Graduate_Project/Cardia.srcs/sources_1/new/xadc_uart_stream.sv
-read_ip -quiet c:/Users/JP/Documents/School/Grad_Project_v2/Graduate_Project/Cardia.srcs/sources_1/ip/UART_IP_0/UART_IP_0.xci
+read_ip -quiet C:/Users/JP/Documents/School/Grad_Project_v2/Graduate_Project/Cardia.srcs/sources_1/ip/UART_IP_0/UART_IP_0.xci
 
-read_ip -quiet c:/Users/JP/Documents/School/Grad_Project_v2/Graduate_Project/Cardia.srcs/sources_1/ip/xadc_wiz_0/xadc_wiz_0.xci
+read_ip -quiet C:/Users/JP/Documents/School/Grad_Project_v2/Graduate_Project/Cardia.srcs/sources_1/ip/xadc_wiz_0/xadc_wiz_0.xci
 set_property used_in_implementation false [get_files -all c:/Users/JP/Documents/School/Grad_Project_v2/Graduate_Project/Cardia.gen/sources_1/ip/xadc_wiz_0/xadc_wiz_0_ooc.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/JP/Documents/School/Grad_Project_v2/Graduate_Project/Cardia.gen/sources_1/ip/xadc_wiz_0/xadc_wiz_0.xdc]
 
@@ -110,6 +111,8 @@ read_xdc C:/Users/JP/Downloads/Zybo-Z7-Master.xdc
 set_property used_in_implementation false [get_files C:/Users/JP/Downloads/Zybo-Z7-Master.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
+
+read_checkpoint -auto_incremental -incremental C:/Users/JP/Documents/School/Grad_Project_v2/Graduate_Project/Cardia.srcs/utils_1/imports/synth_1/xadc_uart_stream.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }

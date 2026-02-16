@@ -22,7 +22,8 @@
 
 module xadc_uart_stream(
     input logic clk,
-    input logic [7:0] ja,
+    input logic Vaux14_v_p,
+    input logic Vaux14_v_n,
     input logic RX,
     output logic TX,
     output logic [3:0] led
@@ -34,13 +35,16 @@ module xadc_uart_stream(
     logic [15:0] dout; //adc data out bus
     logic drdy;
     logic [1:0] _drdy = 0; // delayed data ready signal for edge detection
-    logic [7:0] data = 0; // stored xadc data, only the uppoermost byte
+    logic [15:0] data = 0; // stored xadc data, 
     
     //Wires for UART
     logic [7:0] rx_data; //Received byte
     logic rx_ready; //Pulse when byte received
     logic [7:0] tx_data = 8'd0;
     logic tx_start = 1'b0;
+    
+   typedef enum logic [2:0] {S_IDLE, S_H2, S_H1, S_H0, S_CR, S_LF, S_WAIT} state_t;
+    state_t state = S_IDLE;
     
     //Instantiate IP's
     xadc_wiz_0 myxadc(
@@ -53,8 +57,8 @@ module xadc_uart_stream(
         .drdy_out (drdy), // data ready
         .eoc_out (eoc), // end of conversion
         
-        .vauxn14        (ja[4]),
-        .vauxp14        (ja[0]),
+        .vauxn14        (Vaux14_v_n),
+        .vauxp14        (Vaux14_v_p),
         
         .vn_in          (1'b0),
         .vp_in          (1'b0)
@@ -82,18 +86,22 @@ module xadc_uart_stream(
     // latch data when DRDY falls
     always_ff @(posedge clk) begin
         if (drdy_fall) begin
-            data <= dout[15:8];
+            data <= dout;
         end
     end
+    
+    // Extract 12-bit ADC code (unipolar code range 0..FFF)
+    logic [11:0] adc12;
+    assign adc12 = data[15:4];
     
     // LED debug
     // led0 toggles on every captured sample
     always_ff @(posedge clk) begin
         if (drdy_fall) led[0] <= ~led[0];
     end
-    assign led[1] = |data;     // on if data != 0
-    assign led[2] = data[7];
-    assign led[3] = data[6];
+    assign led[1] = |adc12;     // on if data != 0
+    assign led[2] = adc12[11];
+    assign led[3] = adc12[10];
     
     // ============================================================
     // UART streaming: send "HH\r\n" at a safe rate
@@ -111,54 +119,62 @@ module xadc_uart_stream(
     localparam int CLK_FREQ      = 125_000_000;
     localparam int BAUD          = 115_200;
     localparam int CLKS_PER_BIT  = CLK_FREQ / BAUD;
-    localparam int CLKS_PER_BYTE = CLKS_PER_BIT * 10;
+    localparam int CLKS_PER_BYTE = CLKS_PER_BIT * 12;
 
     // Downsample so we don't try to print every XADC conversion
-    localparam int PRINT_DIV = 5000;   // adjust: smaller=faster prints, bigger=slower
-    int sample_div = 0;
+    localparam int PRINT_DIV = 200000;   // adjust: smaller=faster prints, bigger=slower
+    logic [$clog2(PRINT_DIV+1)-1:0] sample_div = '0;
 
     logic       kick_print = 1'b0;
-    logic [7:0] latched    = 8'h00;
+    logic [11:0] latched_adc12    = 12'h000;
 
     always_ff @(posedge clk) begin
         kick_print <= 1'b0;
+
         if (drdy_fall) begin
             if (sample_div == PRINT_DIV-1) begin
-                sample_div  <= 0;
-                latched     <= data;      // print latest captured byte
-                kick_print  <= 1'b1;
+                sample_div <= '0;
+
+                // only start a message if idle
+                if (state == S_IDLE) begin
+                    latched_adc12 <= adc12;
+                    kick_print    <= 1'b1;
+                end
             end else begin
                 sample_div <= sample_div + 1;
             end
         end
     end
 
-    typedef enum logic [2:0] {S_IDLE, S_HI, S_LO, S_CR, S_LF, S_WAIT} state_t;
-    state_t state = S_IDLE;
-
     logic [31:0] wait_cnt = 0;
     state_t      next_state = S_IDLE;
 
     always_ff @(posedge clk) begin
-        tx_start <= 1'b0; // default (pulse)
+        tx_start <= 1'b0;
 
         case (state)
             S_IDLE: begin
-                if (kick_print) begin
-                    state <= S_HI;
-                end
+                if (kick_print) state <= S_H2;
             end
 
-            S_HI: begin
-                tx_data    <= hexchar(latched[7:4]);
+            S_H2: begin
+                tx_data    <= hexchar(latched_adc12[11:8]);
                 tx_start   <= 1'b1;
                 wait_cnt   <= 0;
-                next_state <= S_LO;
+                next_state <= S_H1;
                 state      <= S_WAIT;
             end
 
-            S_LO: begin
-                tx_data    <= hexchar(latched[3:0]);
+            S_H1: begin
+                tx_data    <= hexchar(latched_adc12[7:4]);
+                tx_start   <= 1'b1;
+                wait_cnt   <= 0;
+                next_state <= S_H0;
+                state      <= S_WAIT;
+            end
+
+            S_H0: begin
+                tx_data    <= hexchar(latched_adc12[3:0]);
                 tx_start   <= 1'b1;
                 wait_cnt   <= 0;
                 next_state <= S_CR;

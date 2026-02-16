@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
-| Date         : Sun Feb 15 23:29:42 2026
+| Date         : Mon Feb 16 12:01:11 2026
 | Host         : DESKTOP-6LGOCJL running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file xadc_uart_stream_control_sets_placed.rpt
 | Design       : xadc_uart_stream
@@ -27,7 +27,7 @@ Table of Contents
 |    Minimum number of control sets                        |     9 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    31 |
+| Unused register locations in slices containing registers |    37 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -43,11 +43,11 @@ Table of Contents
 | >= 0 to < 4        |     0 |
 | >= 4 to < 6        |     0 |
 | >= 6 to < 8        |     1 |
-| >= 8 to < 10       |     3 |
+| >= 8 to < 10       |     2 |
 | >= 10 to < 12      |     1 |
 | >= 12 to < 14      |     2 |
 | >= 14 to < 16      |     1 |
-| >= 16              |     1 |
+| >= 16              |     2 |
 +--------------------+-------+
 * Control sets can be remapped at either synth_design or opt_design
 
@@ -58,12 +58,12 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |               9 |            5 |
+| No           | No                    | No                     |               9 |            4 |
 | No           | No                    | Yes                    |               0 |            0 |
 | No           | Yes                   | No                     |              11 |            3 |
-| Yes          | No                    | No                     |              48 |           13 |
+| Yes          | No                    | No                     |              56 |           18 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |              45 |           13 |
+| Yes          | Yes                   | No                     |              31 |           10 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
@@ -74,14 +74,14 @@ Table of Contents
 |  Clock Signal  |                   Enable Signal                  |           Set/Reset Signal          | Slice Load Count | Bel Load Count | Bels / Slice |
 +----------------+--------------------------------------------------+-------------------------------------+------------------+----------------+--------------+
 |  clk_IBUF_BUFG | myuart/inst/Uart_tx/RxD_buff[7]_i_1_n_0          |                                     |                2 |              7 |         3.50 |
-|  clk_IBUF_BUFG | latched                                          |                                     |                1 |              8 |         8.00 |
-|  clk_IBUF_BUFG |                                                  |                                     |                5 |              9 |         1.80 |
-|  clk_IBUF_BUFG | next_state                                       |                                     |                3 |              9 |         3.00 |
+|  clk_IBUF_BUFG |                                                  |                                     |                4 |              9 |         2.25 |
+|  clk_IBUF_BUFG | next_state                                       |                                     |                5 |              9 |         1.80 |
 |  clk_IBUF_BUFG |                                                  | myuart/inst/baudgen/cnt[10]_i_1_n_0 |                3 |             11 |         3.67 |
-|  clk_IBUF_BUFG | myuart/inst/Uart_tx/FSM_onehot_state[11]_i_1_n_0 |                                     |                2 |             12 |         6.00 |
-|  clk_IBUF_BUFG | drdy_fall                                        |                                     |                5 |             12 |         2.40 |
+|  clk_IBUF_BUFG | latched_adc12[11]_i_1_n_0                        |                                     |                2 |             12 |         6.00 |
+|  clk_IBUF_BUFG | myuart/inst/Uart_tx/FSM_onehot_state[11]_i_1_n_0 |                                     |                3 |             12 |         4.00 |
 |  clk_IBUF_BUFG | wait_cnt[13]_i_2_n_0                             | wait_cnt[13]_i_1_n_0                |                5 |             14 |         2.80 |
-|  clk_IBUF_BUFG | drdy_fall                                        | latched                             |                8 |             31 |         3.88 |
+|  clk_IBUF_BUFG | drdy_fall                                        |                                     |                6 |             16 |         2.67 |
+|  clk_IBUF_BUFG | drdy_fall                                        | sample_div[17]_i_1_n_0              |                5 |             17 |         3.40 |
 +----------------+--------------------------------------------------+-------------------------------------+------------------+----------------+--------------+
 
 

@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
-| Date             : Sun Feb 15 23:29:50 2026
+| Date             : Mon Feb 16 12:01:19 2026
 | Host             : DESKTOP-6LGOCJL running 64-bit major release  (build 9200)
 | Command          : report_power -file xadc_uart_stream_power_routed.rpt -pb xadc_uart_stream_power_summary_routed.pb -rpx xadc_uart_stream_power_routed.rpx
 | Design           : xadc_uart_stream
@@ -53,12 +53,13 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.002 |        3 |       --- |             --- |
-| Slice Logic    |    <0.001 |      205 |       --- |             --- |
-|   LUT as Logic |    <0.001 |       61 |     17600 |            0.35 |
-|   Register     |    <0.001 |      113 |     35200 |            0.32 |
-|   CARRY4       |    <0.001 |       12 |      4400 |            0.27 |
+| Slice Logic    |    <0.001 |      203 |       --- |             --- |
+|   LUT as Logic |    <0.001 |       69 |     17600 |            0.39 |
+|   Register     |    <0.001 |      107 |     35200 |            0.30 |
+|   CARRY4       |    <0.001 |        9 |      4400 |            0.20 |
+|   F7/F8 Muxes  |    <0.001 |        1 |     17600 |           <0.01 |
 |   Others       |     0.000 |        7 |       --- |             --- |
-| Signals        |    <0.001 |      172 |       --- |             --- |
+| Signals        |    <0.001 |      170 |       --- |             --- |
 | I/O            |     0.002 |        8 |       100 |            8.00 |
 | XADC           |     0.002 |        1 |       --- |             --- |
 | Static Power   |     0.093 |          |           |                 |

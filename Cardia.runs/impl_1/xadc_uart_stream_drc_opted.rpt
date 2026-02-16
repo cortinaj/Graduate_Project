@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
-| Date         : Sun Feb 15 23:29:40 2026
+| Date         : Mon Feb 16 12:01:09 2026
 | Host         : DESKTOP-6LGOCJL running 64-bit major release  (build 9200)
 | Command      : report_drc -file xadc_uart_stream_drc_opted.rpt -pb xadc_uart_stream_drc_opted.pb -rpx xadc_uart_stream_drc_opted.rpx
 | Design       : xadc_uart_stream
@@ -24,21 +24,15 @@ Table of Contents
       Design limits: <entire design considered>
            Ruledeck: default
              Max violations: <unlimited>
-             Violations found: 2
-+--------+----------+------------------------------------------------+------------+
-| Rule   | Severity | Description                                    | Violations |
-+--------+----------+------------------------------------------------+------------+
-| PLIO-3 | Warning  | Placement Constraints Check for IO constraints | 1          |
-| ZPS7-1 | Warning  | PS7 block required                             | 1          |
-+--------+----------+------------------------------------------------+------------+
+             Violations found: 1
++--------+----------+--------------------+------------+
+| Rule   | Severity | Description        | Violations |
++--------+----------+--------------------+------------+
+| ZPS7-1 | Warning  | PS7 block required | 1          |
++--------+----------+--------------------+------------+
 
 2. REPORT DETAILS
 -----------------
-PLIO-3#1 Warning
-Placement Constraints Check for IO constraints  
-Partially locked IO Bus is found. Following components of the IO Bus ja[7:0] are not locked:  ja[7] ja[6] ja[5] ja[3] ja[2] ja[1]
-Related violations: <none>
-
 ZPS7-1#1 Warning
 PS7 block required  
 The PS7 cell must be used in this Zynq design in order to enable correct default configuration.
