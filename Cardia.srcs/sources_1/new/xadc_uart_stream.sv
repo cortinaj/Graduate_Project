@@ -122,7 +122,7 @@ module xadc_uart_stream(
     localparam int CLKS_PER_BYTE = CLKS_PER_BIT * 12;
 
     // Downsample so we don't try to print every XADC conversion
-    localparam int PRINT_DIV = 200000;   // adjust: smaller=faster prints, bigger=slower
+    localparam int PRINT_DIV = 3844;   // adjust: smaller=faster prints, bigger=slower
     logic [$clog2(PRINT_DIV+1)-1:0] sample_div = '0;
 
     logic       kick_print = 1'b0;
