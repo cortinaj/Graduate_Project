@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
-| Date         : Wed Feb 25 10:55:09 2026
+| Date         : Mon Mar 23 23:40:11 2026
 | Host         : DESKTOP-6LGOCJL running 64-bit major release  (build 9200)
 | Command      : report_utilization -file xadc_uart_stream_utilization_synth.rpt -pb xadc_uart_stream_utilization_synth.pb
 | Design       : xadc_uart_stream
@@ -149,14 +149,14 @@ Warning! LUT value is adjusted to account for LUT combining.
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
 | FDRE     |   67 |        Flop & Latch |
-| LUT6     |   21 |                 LUT |
-| LUT3     |    9 |                 LUT |
-| LUT4     |    8 |                 LUT |
+| LUT6     |   19 |                 LUT |
+| LUT5     |    8 |                 LUT |
+| LUT3     |    7 |                 LUT |
 | CARRY4   |    7 |          CarryLogic |
+| LUT4     |    6 |                 LUT |
+| LUT2     |    6 |                 LUT |
 | OBUF     |    5 |                  IO |
-| LUT2     |    5 |                 LUT |
 | IBUF     |    4 |                  IO |
-| LUT5     |    3 |                 LUT |
 | LUT1     |    3 |                 LUT |
 | BUFG     |    1 |               Clock |
 +----------+------+---------------------+

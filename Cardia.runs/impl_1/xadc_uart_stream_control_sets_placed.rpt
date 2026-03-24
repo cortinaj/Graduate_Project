@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.2 (win64) Build 4029153 Fri Oct 13 20:14:34 MDT 2023
-| Date         : Wed Feb 25 10:55:34 2026
+| Date         : Mon Mar 23 23:40:37 2026
 | Host         : DESKTOP-6LGOCJL running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file xadc_uart_stream_control_sets_placed.rpt
 | Design       : xadc_uart_stream
@@ -58,10 +58,10 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |               9 |            4 |
+| No           | No                    | No                     |               9 |            6 |
 | No           | No                    | Yes                    |               0 |            0 |
 | No           | Yes                   | No                     |              11 |            3 |
-| Yes          | No                    | No                     |              57 |           19 |
+| Yes          | No                    | No                     |              57 |           20 |
 | Yes          | No                    | Yes                    |               0 |            0 |
 | Yes          | Yes                   | No                     |              24 |            7 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
@@ -75,14 +75,14 @@ Table of Contents
 +----------------+--------------------------------------------------+-------------------------------------+------------------+----------------+--------------+
 |  clk_IBUF_BUFG | wait_cnt[13]_i_2_n_0                             |                                     |                1 |              1 |         1.00 |
 |  clk_IBUF_BUFG | myuart/inst/Uart_tx/RxD_buff[7]_i_1_n_0          |                                     |                3 |              7 |         2.33 |
-|  clk_IBUF_BUFG |                                                  |                                     |                4 |              9 |         2.25 |
-|  clk_IBUF_BUFG | next_state                                       |                                     |                4 |              9 |         2.25 |
+|  clk_IBUF_BUFG |                                                  |                                     |                6 |              9 |         1.50 |
+|  clk_IBUF_BUFG | next_state                                       |                                     |                6 |              9 |         1.50 |
 |  clk_IBUF_BUFG |                                                  | myuart/inst/baudgen/cnt[10]_i_1_n_0 |                3 |             11 |         3.67 |
 |  clk_IBUF_BUFG | drdy_fall                                        | sample_div[11]_i_1_n_0              |                3 |             11 |         3.67 |
-|  clk_IBUF_BUFG | latched_adc12[11]_i_1_n_0                        |                                     |                2 |             12 |         6.00 |
+|  clk_IBUF_BUFG | latched_adc12[11]_i_1_n_0                        |                                     |                3 |             12 |         4.00 |
 |  clk_IBUF_BUFG | myuart/inst/Uart_tx/FSM_onehot_state[11]_i_1_n_0 |                                     |                3 |             12 |         4.00 |
 |  clk_IBUF_BUFG | wait_cnt[13]_i_2_n_0                             | wait_cnt[13]_i_1_n_0                |                4 |             13 |         3.25 |
-|  clk_IBUF_BUFG | drdy_fall                                        |                                     |                6 |             16 |         2.67 |
+|  clk_IBUF_BUFG | drdy_fall                                        |                                     |                4 |             16 |         4.00 |
 +----------------+--------------------------------------------------+-------------------------------------+------------------+----------------+--------------+
 
 
